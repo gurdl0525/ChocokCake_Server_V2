@@ -30,6 +30,14 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
 }
 
+allOpen{
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("org.springframework.data.redis.core.RedisHash")
+    annotation("org.springframework.data.mongodb.core.mapping.Document")
+    annotation("javax.persistence.Embeddable")
+}
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
