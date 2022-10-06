@@ -1,9 +1,9 @@
 ---
-name: 기능 이슈<br>
-about: 새로운 기능<br>
-title: ' '<br>
-labels: documentation, enhancement<br>
-assignees: ' '
+name : 기능 이슈
+about : 새로운 기능
+title : ' '
+labels : documentation, enhancement
+assignees : ' '
 ---
 ## Describe
 - <!-- 작업 내용 작성 -->
