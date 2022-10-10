@@ -36,6 +36,7 @@ allOpen{
     annotation("org.springframework.data.redis.core.RedisHash")
     annotation("org.springframework.data.mongodb.core.mapping.Document")
     annotation("javax.persistence.Embeddable")
+    annotation("org.springframework.context.annotation.Configuration")
 }
 
 tasks.withType<KotlinCompile> {
