@@ -20,27 +20,27 @@ abstract class User(
 ) : BaseTimeEntity(createdAt, updatedAt) {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     var id: Long? = id
         protected set
 
-    @Column(name = "name")
+    @Column(name = "name", length = 60, nullable = false)
     var name: String = name
         protected set
 
-    @Column(name = "account_id")
+    @Column(name = "account_id", length = 60, nullable = false)
     var accountId: String = accountId
         protected set
 
-    @Column(name = "password")
+    @Column(name = "password", length = 60, nullable = false)
     var password: String = password
         protected set
 
-    @Column(name = "is_deleted")
+    @Column(name = "is_deleted", nullable = false)
     var isDeleted: Boolean = false
         protected set
 
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     var roleList: Role = role
         protected set
