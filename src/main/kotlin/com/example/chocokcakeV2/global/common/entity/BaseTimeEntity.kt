@@ -10,18 +10,18 @@ import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-abstract class BaseTimeEntity(
+open abstract class BaseTimeEntity(
     createdAt: LocalDateTime,
     updatedAt: LocalDateTime?
 ) {
 
     @CreatedDate
     @Column(name = "created_at")
-    open var createdAt: LocalDateTime = createdAt
+    var createdAt: LocalDateTime = createdAt
         protected set
 
     @LastModifiedDate
     @Column(name = "update_at")
-    open var updatedAt: LocalDateTime? = updatedAt
+    var updatedAt: LocalDateTime? = updatedAt
         protected set
 }
