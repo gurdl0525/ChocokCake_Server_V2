@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.cors.CorsUtils
 
 @Configuration
@@ -13,8 +14,9 @@ import org.springframework.web.cors.CorsUtils
 class SecurityConfig {
 
     @Bean
-    fun configure(http: HttpSecurity) {
-        http
+    @Throws(Exception::class)
+    fun filterChain(http: HttpSecurity): SecurityFilterChain {
+        return http
             .csrf().disable()
             .formLogin().disable()
             .cors()
@@ -27,8 +29,10 @@ class SecurityConfig {
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
 
-            .anyRequest().permitAll()
             .antMatchers().permitAll()
+            .anyRequest().permitAll()
+
+            .and().build()
     }
 
     @Bean
