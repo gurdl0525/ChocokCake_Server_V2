@@ -12,15 +12,15 @@ class Admin(
     name: String,
     accountId: String,
     password: String,
-    createdAt: LocalDateTime,
-    updatedAt: LocalDateTime?
+    createdAt: LocalDateTime
 ): User(
     id = id,
     name = name,
     accountId = accountId,
     password = password,
+    birthDay = null,
     role = Role.ADMIN,
     createdAt = createdAt,
-    updatedAt = updatedAt
+    updatedAt = null
 ) {
 }
