@@ -8,7 +8,7 @@ import com.example.chocokcakeV2.domain.auth.domain.type.Role
 import com.example.chocokcakeV2.domain.auth.presentation.dto.request.AdminSignUpRequest
 import com.example.chocokcakeV2.domain.auth.repository.UserRepository
 import com.example.chocokcakeV2.global.config.security.auth.AuthenticationFacade
-import com.example.chocokcakeV2.global.error.exception.DuplicatedMemberException
+import com.example.chocokcakeV2.domain.auth.exception.DuplicatedMemberException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
