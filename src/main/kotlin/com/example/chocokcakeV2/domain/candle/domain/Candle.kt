@@ -21,7 +21,7 @@ class Candle(
 ) {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long? = id
         protected set
 
