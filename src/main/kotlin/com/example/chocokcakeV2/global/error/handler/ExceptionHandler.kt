@@ -1,5 +1,6 @@
-package com.example.chocokcakeV2.global.error
+package com.example.chocokcakeV2.global.error.handler
 
+import com.example.chocokcakeV2.global.error.data.ErrorResponse
 import com.example.chocokcakeV2.global.error.exception.BusinessException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
