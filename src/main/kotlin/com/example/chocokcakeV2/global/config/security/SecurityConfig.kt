@@ -1,5 +1,9 @@
-package com.example.chocokcakeV2.global.config
+package com.example.chocokcakeV2.global.config.security
 
+import com.example.chocokcakeV2.global.config.filter.FilterConfig
+import com.example.chocokcakeV2.global.config.security.auth.AuthDetailsService
+import com.example.chocokcakeV2.global.config.security.jwt.TokenProvider
+import com.example.chocokcakeV2.global.error.handler.ExceptionHandlerFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -11,7 +15,11 @@ import org.springframework.web.cors.CorsUtils
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig(
+    private val tokenProvider: TokenProvider,
+    private val authDetailsService: AuthDetailsService,
+    private val exceptionHandlerFilter: ExceptionHandlerFilter
+) {
 
     @Bean
     @Throws(Exception::class)
@@ -31,6 +39,9 @@ class SecurityConfig {
 
             .antMatchers().permitAll()
             .anyRequest().permitAll()
+
+            .and()
+            .apply(FilterConfig(tokenProvider, authDetailsService, exceptionHandlerFilter))
 
             .and().build()
     }
