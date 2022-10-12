@@ -5,7 +5,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -27,7 +27,7 @@ server:
 
 jwt:
   header: ${JWT_HEADER}
-  scretKey: ${SECRET_KEY}
+  secretKey: ${SECRET_KEY}
   accessExp: ${ACCESS_EXPIRED}
   accessTyp: ${ACCESS_TYPE}
   refreshExp: ${REFRESH_EXPIRED}
