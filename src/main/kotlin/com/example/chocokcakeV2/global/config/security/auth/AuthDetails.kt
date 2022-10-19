@@ -1,6 +1,6 @@
 package com.example.chocokcakeV2.global.config.security.auth
 
-import com.example.chocokcakeV2.domain.auth.domain.User
+import com.example.chocokcakeV2.domain.auth.entity.user.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 

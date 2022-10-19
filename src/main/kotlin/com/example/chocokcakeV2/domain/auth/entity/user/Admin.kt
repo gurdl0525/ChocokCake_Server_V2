@@ -1,6 +1,6 @@
-package com.example.chocokcakeV2.domain.auth.domain
+package com.example.chocokcakeV2.domain.auth.entity.user
 
-import com.example.chocokcakeV2.domain.auth.domain.type.Role
+import com.example.chocokcakeV2.domain.auth.entity.user.type.Role
 import java.time.LocalDateTime
 import javax.persistence.DiscriminatorValue
 import javax.persistence.Entity
