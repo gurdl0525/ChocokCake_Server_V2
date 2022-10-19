@@ -1,6 +1,6 @@
 package com.example.chocokcakeV2.domain.auth.repository
 
-import com.example.chocokcakeV2.domain.auth.domain.User
+import com.example.chocokcakeV2.domain.auth.entity.user.User
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Optional
 

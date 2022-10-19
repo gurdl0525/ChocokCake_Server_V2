@@ -1,6 +1,6 @@
-package com.example.chocokcakeV2.domain.auth.domain
+package com.example.chocokcakeV2.domain.auth.entity.user
 
-import com.example.chocokcakeV2.domain.auth.domain.type.Role
+import com.example.chocokcakeV2.domain.auth.entity.user.type.Role
 import com.example.chocokcakeV2.global.common.entity.BaseTimeEntity
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.Where
@@ -56,9 +56,4 @@ abstract class User(
     @Column(name = "is_ban", nullable = false)
     var isBan: Boolean = false
         protected set
-
-
-    fun editIsDelete(status: Boolean){
-        this.isDeleted = status
-    }
 }
