@@ -1,6 +1,6 @@
 package com.example.chocokcakeV2.domain.cake.domain
 
-import com.example.chocokcakeV2.domain.auth.domain.General
+import com.example.chocokcakeV2.domain.auth.entity.user.General
 import com.example.chocokcakeV2.domain.cake.domain.type.CakeTheme
 import com.example.chocokcakeV2.domain.candle.domain.Candle
 import com.example.chocokcakeV2.global.common.entity.BaseTimeEntity
