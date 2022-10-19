@@ -8,6 +8,7 @@ enum class ErrorCode(
 ) {
     //400
     DUPLICATED_MEMBER("Duplicated Member", HttpStatus.BAD_REQUEST),
+    INCORRECT_PASSWORD("Incorrect Password", HttpStatus.BAD_REQUEST),
 
     //401
     UN_AUTHORIZED("Un Authorized", HttpStatus.UNAUTHORIZED),
