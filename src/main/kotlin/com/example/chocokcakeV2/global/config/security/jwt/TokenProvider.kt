@@ -1,5 +1,6 @@
 package com.example.chocokcakeV2.global.config.security.jwt
 
+import com.example.chocokcakeV2.domain.auth.presentation.dto.response.TokenResponse
 import com.example.chocokcakeV2.global.config.security.jwt.dotenv.TokenProperty
 import com.example.chocokcakeV2.global.error.exception.TokenCanNotBeNullException
 import com.example.chocokcakeV2.global.error.exception.UnAuthorizedException
@@ -14,20 +15,29 @@ import javax.servlet.http.HttpServletRequest
 class TokenProvider(
     private val property: TokenProperty
 ) {
-    fun generateAccessToken(accountId: String): String{
+    fun generateTokens(accountId: String): TokenResponse{
+        return TokenResponse(
+            accessToken = generateAccessToken(accountId),
+            refreshToken = generateRefreshToken(accountId)
+        )
+    }
+
+    private fun generateAccessToken(accountId: String): String{
         return Jwts.builder()
             .signWith(SignatureAlgorithm.HS256, property.secretKey)
             .setHeaderParam("header", property.header)
+            .setSubject(accountId)
             .claim("type", property.accessTyp)
             .setIssuedAt(Date())
             .setExpiration(Date(Date().time + (property.accessExp * 1000)))
             .compact()
     }
 
-    fun generateRefreshToken(accountId: String): String{
+    private fun generateRefreshToken(accountId: String): String{
         return Jwts.builder()
             .signWith(SignatureAlgorithm.HS256, property.secretKey)
             .setHeaderParam("header", property.header)
+            .setSubject(accountId)
             .claim("type", property.refreshTyp)
             .setIssuedAt(Date())
             .setExpiration(Date(Date().time + (property.refreshExp * 1000)))
