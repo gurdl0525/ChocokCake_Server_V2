@@ -10,7 +10,7 @@ import com.example.chocokcakeV2.domain.auth.presentation.dto.request.AdminSignUp
 import com.example.chocokcakeV2.domain.auth.repository.UserRepository
 import com.example.chocokcakeV2.global.config.security.auth.AuthenticationFacade
 import com.example.chocokcakeV2.domain.auth.exception.DuplicatedMemberException
-import com.example.chocokcakeV2.domain.auth.exception.IncorrectPassword
+import com.example.chocokcakeV2.domain.auth.exception.IncorrectPasswordException
 import com.example.chocokcakeV2.domain.auth.presentation.dto.request.LoginRequest
 import com.example.chocokcakeV2.domain.auth.presentation.dto.response.TokenResponse
 import com.example.chocokcakeV2.domain.auth.repository.RefreshTokenRepository
@@ -80,6 +80,6 @@ class AuthServiceImpl(
                 tokenProperty.refreshExp
             ))
         }
-        throw IncorrectPassword(request.password)
+        throw IncorrectPasswordException(request.password)
     }
 }
