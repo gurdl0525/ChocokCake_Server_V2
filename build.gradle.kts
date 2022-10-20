@@ -38,6 +38,13 @@ allOpen{
     annotation("javax.persistence.Embeddable")
 }
 
+noArg {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("org.springframework.data.redis.core.RedisHash")
+    annotation("javax.persistence.Embeddable")
+}
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
