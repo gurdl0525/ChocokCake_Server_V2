@@ -1,6 +1,5 @@
 package com.example.chocokcakeV2.global.config.filter
 
-import com.example.chocokcakeV2.global.config.security.auth.AuthDetailsService
 import com.example.chocokcakeV2.global.config.security.jwt.TokenFilter
 import com.example.chocokcakeV2.global.config.security.jwt.TokenProvider
 import com.example.chocokcakeV2.global.error.handler.ExceptionHandlerFilter
@@ -11,12 +10,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 class FilterConfig(
     private val tokenProvider: TokenProvider,
-    private val authDetailsService: AuthDetailsService,
     private val exceptionHandlerFilter: ExceptionHandlerFilter
 ): SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity>() {
-    override fun configure(builder: HttpSecurity) {
-        val tokenFilter = TokenFilter(tokenProvider, authDetailsService)
-        builder.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter::class.java)
-        builder.addFilterBefore(exceptionHandlerFilter, TokenFilter::class.java)
+
+    @Throws(Exception::class)
+    override fun configure(httpSecurity: HttpSecurity) {
+        httpSecurity.addFilterBefore(
+            TokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter::class.java)
+        httpSecurity.addFilterBefore(exceptionHandlerFilter, TokenFilter::class.java)
     }
 }
