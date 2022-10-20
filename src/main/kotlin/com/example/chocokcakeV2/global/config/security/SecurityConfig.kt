@@ -1,7 +1,6 @@
 package com.example.chocokcakeV2.global.config.security
 
 import com.example.chocokcakeV2.global.config.filter.FilterConfig
-import com.example.chocokcakeV2.global.config.security.auth.AuthDetailsService
 import com.example.chocokcakeV2.global.config.security.jwt.TokenProvider
 import com.example.chocokcakeV2.global.error.handler.ExceptionHandlerFilter
 import org.springframework.context.annotation.Bean
@@ -11,13 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.web.cors.CorsUtils
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
     private val tokenProvider: TokenProvider,
-    private val authDetailsService: AuthDetailsService,
     private val exceptionHandlerFilter: ExceptionHandlerFilter
 ) {
 
@@ -35,13 +32,11 @@ class SecurityConfig(
 
             .and()
             .authorizeRequests()
-            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
 
-            .antMatchers().permitAll()
             .anyRequest().permitAll()
 
             .and()
-            .apply(FilterConfig(tokenProvider, authDetailsService, exceptionHandlerFilter))
+            .apply(FilterConfig(tokenProvider, exceptionHandlerFilter))
 
             .and().build()
     }
