@@ -9,5 +9,4 @@ interface UserRepository<T: User>: JpaRepository<T, Long> {
 
     fun findByAccountId(accountId: String): Optional<T>
 
-    fun findByAccountIdOrNull(subject: String): T?
 }
