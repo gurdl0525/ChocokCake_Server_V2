@@ -27,10 +27,4 @@ class RefreshToken(
     var ttl: Long = refreshExp
         protected set
 
-    fun reset(accessToken: String,refreshToken: String, refreshExp: Long){
-        this.accessToken = accessToken
-        this.refreshToken = refreshToken
-        this.ttl = refreshExp
-    }
-
 }
