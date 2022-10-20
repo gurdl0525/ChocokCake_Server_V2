@@ -3,6 +3,7 @@ package com.example.chocokcakeV2.domain.auth.presentation.controller
 import com.example.chocokcakeV2.domain.auth.presentation.dto.request.AdminSignUpRequest
 import com.example.chocokcakeV2.domain.auth.presentation.dto.request.GeneralSignUpRequest
 import com.example.chocokcakeV2.domain.auth.presentation.dto.request.LoginRequest
+import com.example.chocokcakeV2.domain.auth.presentation.dto.request.ReissueTokenRequest
 import com.example.chocokcakeV2.domain.auth.presentation.dto.response.TokenResponse
 import com.example.chocokcakeV2.domain.auth.service.AuthService
 import org.springframework.http.HttpStatus
@@ -48,5 +49,13 @@ class AuthController(
         request: LoginRequest
     ): TokenResponse{
         return authService.login(request)
+    }
+
+    @PostMapping("/re-issue")
+    fun reissue(
+        @RequestBody
+        request: ReissueTokenRequest
+    ): TokenResponse {
+        return authService.reissue(request)
     }
 }
