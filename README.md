@@ -1,6 +1,8 @@
 # ChocokCake_Server_V2
 ### Language
 * Kotlin
+### Framework
+* Spring
 ### DataBase
 * MySQL
 * Redis
