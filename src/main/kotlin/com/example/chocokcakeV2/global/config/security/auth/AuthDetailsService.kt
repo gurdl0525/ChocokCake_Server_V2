@@ -13,7 +13,7 @@ class AuthDetailsService(
 ): UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
         return userRepository.findByAccountId(username)
-            .map { AuthDetails(user = it) }
+            .map { AuthDetails(it) }
             .orElseThrow { UserNotFoundException("$username to token") }
     }
 
