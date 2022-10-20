@@ -2,14 +2,17 @@ package com.example.chocokcakeV2.global.config.security.auth
 
 import com.example.chocokcakeV2.domain.auth.entity.user.User
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class AuthDetails(
+open class AuthDetails(
     private val user: User
 ):UserDetails {
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? {
-        return null
+    override fun getAuthorities(): MutableCollection<GrantedAuthority> {
+        val authorities: MutableList<GrantedAuthority> = ArrayList()
+        authorities.add(SimpleGrantedAuthority(user.roleList.toString()))
+        return authorities
     }
 
     override fun getUsername(): String {
