@@ -12,6 +12,7 @@ import com.example.chocokcakeV2.global.config.security.auth.AuthenticationFacade
 import com.example.chocokcakeV2.domain.auth.exception.DuplicatedMemberException
 import com.example.chocokcakeV2.domain.auth.exception.IncorrectPasswordException
 import com.example.chocokcakeV2.domain.auth.presentation.dto.request.LoginRequest
+import com.example.chocokcakeV2.domain.auth.presentation.dto.request.ReissueTokenRequest
 import com.example.chocokcakeV2.domain.auth.presentation.dto.response.TokenResponse
 import com.example.chocokcakeV2.domain.auth.repository.RefreshTokenRepository
 import com.example.chocokcakeV2.global.config.security.jwt.TokenProvider
@@ -72,14 +73,32 @@ class AuthServiceImpl(
             .orElseThrow{UserNotFoundException(request.accountId)}
 
         if(passwordEncoder.matches(request.password, user.password)){
-            val response = tokenProvider.generateTokens(user.accountId)
-            refreshTokenRepository.save(RefreshToken(
-                id = user.accountId,
-                accessToken = response.accessToken,
-                refreshToken = response.refreshToken,
-                tokenProperty.refreshExp
-            ))
+            return generateToken(user)
         }
         throw IncorrectPasswordException(request.password)
+    }
+
+    override fun reissue(request: ReissueTokenRequest): TokenResponse {
+        val redis = refreshTokenRepository.findByAccessTokenAndRefreshToken(request.accessToken, request.refreshToken)
+            .orElse(null)
+        if(redis != null){
+            val user = userRepository.findByAccountIdOrNull(tokenProvider.getSubject(redis.refreshToken))
+                ?:throw UserNotFoundException("User Not Found By Tokens : $request")
+
+            refreshTokenRepository.delete(redis)
+
+            return generateToken(user)
+
+        }else throw UserNotFoundException("User Not Found By Tokens : $request")
+    }
+    private fun generateToken(user: User): TokenResponse {
+        val response = tokenProvider.generateTokens(user.accountId)
+        refreshTokenRepository.save(RefreshToken(
+            id = user.accountId,
+            accessToken = response.accessToken,
+            refreshToken = response.refreshToken,
+            tokenProperty.refreshExp
+        ))
+        return response
     }
 }
