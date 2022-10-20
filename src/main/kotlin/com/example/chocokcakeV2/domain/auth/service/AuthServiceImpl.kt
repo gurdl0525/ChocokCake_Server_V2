@@ -2,21 +2,17 @@ package com.example.chocokcakeV2.domain.auth.service
 
 import com.example.chocokcakeV2.domain.auth.entity.token.RefreshToken
 import com.example.chocokcakeV2.domain.auth.entity.user.Admin
-import com.example.chocokcakeV2.domain.auth.presentation.dto.request.GeneralSignUpRequest
 import com.example.chocokcakeV2.domain.auth.entity.user.General
 import com.example.chocokcakeV2.domain.auth.entity.user.User
 import com.example.chocokcakeV2.domain.auth.entity.user.type.Role
-import com.example.chocokcakeV2.domain.auth.presentation.dto.request.AdminSignUpRequest
 import com.example.chocokcakeV2.domain.auth.repository.UserRepository
 import com.example.chocokcakeV2.global.config.security.auth.AuthenticationFacade
 import com.example.chocokcakeV2.domain.auth.exception.DuplicatedMemberException
 import com.example.chocokcakeV2.domain.auth.exception.IncorrectPasswordException
-import com.example.chocokcakeV2.domain.auth.presentation.dto.request.LoginRequest
-import com.example.chocokcakeV2.domain.auth.presentation.dto.request.ReissueTokenRequest
+import com.example.chocokcakeV2.domain.auth.presentation.dto.request.*
 import com.example.chocokcakeV2.domain.auth.presentation.dto.response.TokenResponse
 import com.example.chocokcakeV2.domain.auth.repository.RefreshTokenRepository
 import com.example.chocokcakeV2.global.config.security.jwt.TokenProvider
-import com.example.chocokcakeV2.global.config.security.jwt.dotenv.TokenProperty
 import com.example.chocokcakeV2.global.error.exception.UserNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
@@ -30,9 +26,13 @@ class AuthServiceImpl(
     private val userRepository: UserRepository<User>,
     private val authenticationFacade: AuthenticationFacade,
     private val tokenProvider: TokenProvider,
-    private val refreshTokenRepository: RefreshTokenRepository,
-    private val tokenProperty: TokenProperty
+    private val refreshTokenRepository: RefreshTokenRepository
 ): AuthService{
+
+    override fun checkDuplicateAccountId(request: String) {
+        duplicateMemberVerification(request)
+    }
+
     override fun generalSignUp(request: GeneralSignUpRequest) {
         duplicateMemberVerification(request.accountId)
         generalRepository.save(
@@ -73,32 +73,29 @@ class AuthServiceImpl(
             .orElseThrow{UserNotFoundException(request.accountId)}
 
         if(passwordEncoder.matches(request.password, user.password)){
-            return generateToken(user)
+            return tokenProvider.generateTokens(user.accountId)
         }
         throw IncorrectPasswordException(request.password)
     }
 
     override fun reissue(request: ReissueTokenRequest): TokenResponse {
-        val redis = refreshTokenRepository.findByAccessTokenAndRefreshToken(request.accessToken, request.refreshToken)
-            .orElse(null)
-        if(redis != null){
-            val user = userRepository.findByAccountIdOrNull(tokenProvider.getSubject(redis.refreshToken))
-                ?:throw UserNotFoundException("User Not Found By Tokens : $request")
 
+        val redis = refreshTokenRepository
+            .findByAccessTokenAndRefreshToken(request.accessToken, request.refreshToken).orElse(null)
+
+        val accountId = tokenProvider.getSubject(redis.accessToken)
+
+        if(redis != null && userRepository.existsByAccountId(accountId)){
             refreshTokenRepository.delete(redis)
-
-            return generateToken(user)
-
-        }else throw UserNotFoundException("User Not Found By Tokens : $request")
+            return tokenProvider.generateTokens(accountId)
+        }
+        else throw UserNotFoundException("User Not Found By Tokens : $request")
     }
-    private fun generateToken(user: User): TokenResponse {
-        val response = tokenProvider.generateTokens(user.accountId)
-        refreshTokenRepository.save(RefreshToken(
-            id = user.accountId,
-            accessToken = response.accessToken,
-            refreshToken = response.refreshToken,
-            tokenProperty.refreshExp
-        ))
-        return response
+
+    override fun deleteMember(user: User, request: WithdrawalRequest) {
+        if(passwordEncoder.matches(request.password, user.password)){
+            userRepository.delete(user)
+        }
+        else throw IncorrectPasswordException(request.password)
     }
 }
