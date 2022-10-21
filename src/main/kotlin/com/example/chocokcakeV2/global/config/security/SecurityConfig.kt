@@ -34,6 +34,7 @@ class SecurityConfig(
             .and()
             .authorizeRequests()
 
+            .antMatchers(HttpMethod.POST, "/cake").authenticated()
             .antMatchers(HttpMethod.GET, "/user/info/{id}").authenticated()
             .antMatchers(HttpMethod.DELETE, "/auth").authenticated()
             .anyRequest().permitAll()
