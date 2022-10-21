@@ -2,6 +2,8 @@ package com.example.chocokcakeV2.domain.auth.entity.user
 
 import com.example.chocokcakeV2.domain.auth.entity.user.type.Role
 import com.example.chocokcakeV2.domain.cake.domain.Cake
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
@@ -36,9 +38,5 @@ class General(
 
     fun addCake(cake: Cake){
         this.cakeList.add(cake)
-    }
-    fun doBan(ban: Boolean){
-        this.isBan = ban
-        this.roleList = Role.BANED
     }
 }
