@@ -56,16 +56,12 @@ abstract class User(
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    var roleList: Role = role
-        protected set
-
-    @Column(name = "is_ban", nullable = false)
-    var isBan: Boolean = false
+    var role: Role = role
         protected set
 
     override fun getAuthorities(): MutableCollection<GrantedAuthority> {
         val authorities: MutableList<GrantedAuthority> = ArrayList()
-        authorities.add(SimpleGrantedAuthority(this.roleList.toString()))
+        authorities.add(SimpleGrantedAuthority(this.role.toString()))
         return authorities
     }
 
