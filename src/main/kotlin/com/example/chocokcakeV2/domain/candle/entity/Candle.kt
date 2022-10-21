@@ -1,7 +1,7 @@
-package com.example.chocokcakeV2.domain.candle.domain
+package com.example.chocokcakeV2.domain.candle.entity
 
-import com.example.chocokcakeV2.domain.cake.domain.Cake
-import com.example.chocokcakeV2.domain.candle.domain.type.CandleTheme
+import com.example.chocokcakeV2.domain.cake.entity.Cake
+import com.example.chocokcakeV2.domain.candle.entity.type.CandleTheme
 import com.example.chocokcakeV2.global.common.entity.BaseTimeEntity
 import java.time.LocalDateTime
 import javax.persistence.*

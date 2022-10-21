@@ -1,7 +1,7 @@
 package com.example.chocokcakeV2.domain.auth.entity.user
 
 import com.example.chocokcakeV2.domain.auth.entity.user.type.Role
-import com.example.chocokcakeV2.domain.cake.domain.Cake
+import com.example.chocokcakeV2.domain.cake.entity.Cake
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 import java.time.LocalDate

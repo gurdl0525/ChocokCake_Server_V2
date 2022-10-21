@@ -1,4 +1,4 @@
-package com.example.chocokcakeV2.domain.candle.domain.type
+package com.example.chocokcakeV2.domain.candle.entity.type
 
 enum class CandleTheme {
     RED,
