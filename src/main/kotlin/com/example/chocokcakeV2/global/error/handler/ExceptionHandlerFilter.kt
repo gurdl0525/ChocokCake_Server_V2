@@ -45,6 +45,8 @@ class ExceptionHandlerFilter(
             filterChain.doFilter(request, response)
         }catch (e: BusinessException){
             sendErrorResponse(e.errorCode, e.data, response)
+        }catch (e: Forbidden){
+            sendErrorResponse(ErrorCode.FORBIDDEN, "Token is Null", response)
         }catch (e: Exception){
             sendErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR, "exception handler filter", response)
         }
