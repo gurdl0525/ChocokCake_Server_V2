@@ -13,7 +13,8 @@ import javax.persistence.*
 
 @Entity(name = "user")
 @Where(clause = "is_deleted = false")
-@SQLDelete(sql = "UPDATE `user` SET is_deleted = true where id = ?")
+@SQLDelete(sql = "UPDATE `user` SET is_deleted = true WHERE id = ?")
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "user_type")
 abstract class User(
     id: Long?,
