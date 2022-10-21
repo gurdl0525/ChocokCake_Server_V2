@@ -11,6 +11,7 @@ import javax.persistence.OneToMany
 
 @Entity
 @DiscriminatorValue(value = "GENERAL")
+@OnDelete(action = OnDeleteAction.CASCADE)
 class General(
     id: Long?,
     name: String,
