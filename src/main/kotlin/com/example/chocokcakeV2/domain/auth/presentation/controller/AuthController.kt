@@ -77,10 +77,6 @@ class AuthController(
         @RequestBody request: WithdrawalRequest,
         @AuthenticationPrincipal user: User?
     ){
-        println(user)
-        val authentication: Authentication = SecurityContextHolder.getContext().authentication
-        println(authentication)
-        println(authentication.principal.toString())
         authService.deleteMember(
             user?:throw UserNotFoundException("Not Found User By Token"),
             request
