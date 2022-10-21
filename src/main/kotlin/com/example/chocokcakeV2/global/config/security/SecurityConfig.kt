@@ -5,6 +5,7 @@ import com.example.chocokcakeV2.global.config.security.jwt.TokenProvider
 import com.example.chocokcakeV2.global.error.handler.ExceptionHandlerFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -33,6 +34,8 @@ class SecurityConfig(
             .and()
             .authorizeRequests()
 
+            .antMatchers(HttpMethod.GET, "/user/info/{id}").authenticated()
+            .antMatchers(HttpMethod.DELETE, "/auth").authenticated()
             .anyRequest().permitAll()
 
             .and()
