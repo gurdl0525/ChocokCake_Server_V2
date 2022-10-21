@@ -76,12 +76,12 @@ class TokenProvider(
 
     fun getSubject(token: String): String {
         return getTokenBody(token).subject
-            ?: throw UnAuthorizedException("Un Authorized Token")
+            ?: throw UnAuthorizedException("Token Subject is Null")
     }
 
     private fun getTokenBody(token: String): Claims {
         return Jwts.parser()
-            .setSigningKey(property.secretKey).parseClaimsJws(token).body;
+            .setSigningKey(property.secretKey).parseClaimsJws(token).body
     }
 
     fun getAuthentication(token: String): Authentication {
