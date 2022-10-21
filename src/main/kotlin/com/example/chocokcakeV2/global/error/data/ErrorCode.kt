@@ -14,6 +14,10 @@ enum class ErrorCode(
     UN_AUTHORIZED("Un Authorized", HttpStatus.UNAUTHORIZED),
     TOKEN_CAN_NOT_BE_NULL("Token Can Not Be Null", HttpStatus.UNAUTHORIZED),
 
+    //403
+    NO_PERMISSIONS("No Permissions", HttpStatus.FORBIDDEN),
+    FORBIDDEN("Forbidden", HttpStatus.FORBIDDEN),
+
     //404
     USER_NOT_FOUND("User Not Found", HttpStatus.NOT_FOUND),
 
