@@ -6,6 +6,7 @@ import com.example.chocokcakeV2.global.error.exception.BusinessException
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
+import org.springframework.web.client.HttpClientErrorException.Forbidden
 import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
 import javax.servlet.FilterChain
@@ -48,7 +49,7 @@ class ExceptionHandlerFilter(
         }catch (e: Forbidden){
             sendErrorResponse(ErrorCode.FORBIDDEN, "Token is Null", response)
         }catch (e: Exception){
-            sendErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR, "exception handler filter", response)
+            sendErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR, e.message.toString(), response)
         }
     }
 }
