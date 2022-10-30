@@ -1,4 +1,4 @@
-package com.example.chocokcakeV2.domain.cake.presentation.dto
+package com.example.chocokcakeV2.domain.cake.presentation.dto.request
 
 import com.example.chocokcakeV2.domain.cake.entity.type.CakeTheme
 
