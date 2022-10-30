@@ -12,7 +12,7 @@ import com.example.chocokcakeV2.domain.auth.repository.AdminRepository
 import com.example.chocokcakeV2.domain.auth.repository.GeneralRepository
 import com.example.chocokcakeV2.domain.auth.repository.RefreshTokenRepository
 import com.example.chocokcakeV2.domain.auth.repository.UserRepository
-import com.example.chocokcakeV2.global.config.security.auth.AuthenticationFacade
+import com.example.chocokcakeV2.global.common.facade.BirthDayFacade
 import com.example.chocokcakeV2.global.config.security.jwt.TokenProvider
 import com.example.chocokcakeV2.global.error.exception.UserNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -25,9 +25,9 @@ class AuthServiceImpl(
     private val generalRepository: GeneralRepository,
     private val adminRepository: AdminRepository,
     private val userRepository: UserRepository<User>,
-    private val authenticationFacade: AuthenticationFacade,
     private val tokenProvider: TokenProvider,
-    private val refreshTokenRepository: RefreshTokenRepository
+    private val refreshTokenRepository: RefreshTokenRepository,
+    private val birthDayFacade: BirthDayFacade
 ): AuthService{
 
     override fun checkDuplicateAccountId(request: String) {
@@ -42,7 +42,7 @@ class AuthServiceImpl(
             name = request.name,
             accountId = request.accountId,
             password = passwordEncoder.encode(request.password),
-            birthDay = authenticationFacade.getBirthDay(request.monthOfBirthDay, request.dayOfBirthDay),
+            birthDay = birthDayFacade.enterBirthDay(request.monthOfBirthDay, request.dayOfBirthDay),
             createdAt = LocalDateTime.now(),
             role = Role.GENERAL
             )
