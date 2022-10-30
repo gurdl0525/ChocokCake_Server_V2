@@ -36,6 +36,10 @@ class General(
     var cakeList: MutableList<Cake> = ArrayList()
         protected set
 
+    fun setBirthday(birthDay: LocalDate){
+        this.birthDay = birthDay
+    }
+
     fun addCake(cake: Cake){
         this.cakeList.add(cake)
     }
