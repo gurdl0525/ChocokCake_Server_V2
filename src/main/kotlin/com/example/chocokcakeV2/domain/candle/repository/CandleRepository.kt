@@ -1,4 +1,4 @@
-package com.example.chocokcakeV2.domain.candle.presentation.dto.response
+package com.example.chocokcakeV2.domain.candle.repository
 
 import com.example.chocokcakeV2.domain.cake.entity.Cake
 import com.example.chocokcakeV2.domain.candle.entity.Candle
