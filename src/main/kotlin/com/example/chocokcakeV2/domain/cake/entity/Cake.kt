@@ -42,4 +42,8 @@ class Cake(
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     var user: General = user
+
+    fun editTheme(theme: CakeTheme){
+        this.cakeTheme = theme
+    }
 }
