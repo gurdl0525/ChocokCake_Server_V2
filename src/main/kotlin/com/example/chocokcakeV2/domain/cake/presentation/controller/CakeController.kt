@@ -4,6 +4,7 @@ import com.example.chocokcakeV2.domain.auth.entity.user.User
 import com.example.chocokcakeV2.domain.cake.presentation.dto.request.ThemeRequest
 import com.example.chocokcakeV2.domain.cake.presentation.dto.response.MaximumCakeResponse
 import com.example.chocokcakeV2.domain.cake.service.CakeService
+import com.example.chocokcakeV2.global.error.exception.TokenCanNotBeNullException
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -16,10 +17,11 @@ class CakeController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createCake(
-        @AuthenticationPrincipal user: User,
+        @AuthenticationPrincipal user: User?,
         @RequestBody request: ThemeRequest
     ){
-        cakeService.createCake(user, request)
+        cakeService.createCake(user
+            ?: throw TokenCanNotBeNullException(), request)
     }
 
     @GetMapping
@@ -32,10 +34,11 @@ class CakeController(
 
      @PatchMapping("/theme")
      fun updateCakeTheme(
-         @AuthenticationPrincipal user: User,
+         @AuthenticationPrincipal user: User?,
          @RequestParam id: Long,
          @RequestBody request: ThemeRequest
      ){
-         cakeService.updateCakeTheme(user, id, request)
+         cakeService.updateCakeTheme(user
+             ?: throw TokenCanNotBeNullException(), id, request)
      }
 }
