@@ -5,8 +5,10 @@ import com.example.chocokcakeV2.domain.cake.presentation.dto.request.ThemeReques
 import com.example.chocokcakeV2.domain.cake.presentation.dto.response.MaximumCakeResponse
 
 interface CakeService {
-    fun generateCake(user: User, request: ThemeRequest)
+    fun createCake(user: User, request: ThemeRequest)
 
     fun getMaximumCake(id: Long, page: Int): MaximumCakeResponse
+
+    fun updateCakeTheme(user: User, id: Long, request: ThemeRequest)
 
 }
