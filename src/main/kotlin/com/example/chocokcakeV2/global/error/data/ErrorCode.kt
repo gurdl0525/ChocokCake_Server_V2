@@ -22,6 +22,7 @@ enum class ErrorCode(
     //404
     USER_NOT_FOUND("User Not Found", HttpStatus.NOT_FOUND),
     CAKE_NOT_FOUND("Cake Not Found", HttpStatus.NOT_FOUND),
+    CANDLE_NOT_FOUND("Candle Not Found", HttpStatus.NOT_FOUND),
 
     //500
     INTERNAL_SERVER_ERROR("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
