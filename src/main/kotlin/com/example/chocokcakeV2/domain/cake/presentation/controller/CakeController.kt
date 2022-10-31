@@ -15,18 +15,27 @@ class CakeController(
 ) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun generateCake(
+    fun createCake(
         @AuthenticationPrincipal user: User,
         @RequestBody request: ThemeRequest
     ){
-        cakeService.generateCake(user, request)
+        cakeService.createCake(user, request)
     }
 
-    @GetMapping()
+    @GetMapping
     fun getMaximumCake(
         @RequestParam id: Long,
         @RequestParam page: Int = 0
     ): MaximumCakeResponse{
         return cakeService.getMaximumCake(id, page)
     }
+
+     @PatchMapping("/theme")
+     fun updateCakeTheme(
+         @AuthenticationPrincipal user: User,
+         @RequestParam id: Long,
+         @RequestBody request: ThemeRequest
+     ){
+         cakeService.updateCakeTheme(user, id, request)
+     }
 }
