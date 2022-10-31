@@ -4,6 +4,7 @@ import com.example.chocokcakeV2.domain.auth.entity.user.User
 import com.example.chocokcakeV2.domain.candle.presentation.dto.request.CreateCandleRequest
 import com.example.chocokcakeV2.domain.candle.presentation.dto.response.MaximumCandleResponse
 import com.example.chocokcakeV2.domain.candle.service.CandleService
+import com.example.chocokcakeV2.global.error.exception.TokenCanNotBeNullException
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -25,9 +26,10 @@ class CandleController(
 
     @GetMapping
     fun getMaximumCandle(
-        @AuthenticationPrincipal user: User,
+        @AuthenticationPrincipal user: User?,
         @RequestParam id: Long
     ): MaximumCandleResponse{
-        return candleService.getMaximumCandle(user, id)
+        return candleService.getMaximumCandle(user
+            ?: throw TokenCanNotBeNullException(), id)
     }
 }
