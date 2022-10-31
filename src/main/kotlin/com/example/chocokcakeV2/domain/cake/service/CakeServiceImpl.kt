@@ -75,6 +75,7 @@ class CakeServiceImpl(
             ?: throw CakeNotFoundException(id.toString())
         if(cake.user == user){
             cake.editTheme(request.theme)
+            cakeRepository.save(cake)
         } else {
             throw NoPermissionsException(user.role.toString())
         }
