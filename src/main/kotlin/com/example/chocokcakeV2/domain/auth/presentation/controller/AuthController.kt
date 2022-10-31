@@ -4,6 +4,7 @@ import com.example.chocokcakeV2.domain.auth.entity.user.User
 import com.example.chocokcakeV2.domain.auth.presentation.dto.request.*
 import com.example.chocokcakeV2.domain.auth.presentation.dto.response.TokenResponse
 import com.example.chocokcakeV2.domain.auth.service.AuthService
+import com.example.chocokcakeV2.global.error.exception.TokenCanNotBeNullException
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
@@ -66,8 +67,9 @@ class AuthController(
     fun deleteMember(
         @Valid
         @RequestBody request: WithdrawalRequest,
-        @AuthenticationPrincipal user: User
+        @AuthenticationPrincipal user: User?
     ){
-        authService.deleteMember(user, request)
+        authService.deleteMember(user
+            ?: throw TokenCanNotBeNullException(), request)
     }
 }
