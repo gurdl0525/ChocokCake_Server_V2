@@ -7,10 +7,11 @@ import com.example.chocokcakeV2.domain.cake.exception.AlreadyExistCakeException
 import com.example.chocokcakeV2.domain.cake.presentation.dto.request.ThemeRequest
 import com.example.chocokcakeV2.domain.cake.presentation.dto.response.MaximumCakeResponse
 import com.example.chocokcakeV2.domain.cake.repository.CakeRepository
-import com.example.chocokcakeV2.domain.candle.presentation.dto.response.CandleRepository
+import com.example.chocokcakeV2.domain.candle.repository.CandleRepository
 import com.example.chocokcakeV2.domain.candle.presentation.dto.response.MinimumCandleResponse
 import com.example.chocokcakeV2.global.common.facade.BirthDayFacade
 import com.example.chocokcakeV2.global.error.exception.CakeNotFoundException
+import com.example.chocokcakeV2.global.error.exception.NoPermissionsException
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -24,7 +25,7 @@ class CakeServiceImpl(
     private val candleRepository: CandleRepository
 ): CakeService {
 
-    override fun generateCake(user: User, request: ThemeRequest) {
+    override fun createCake(user: User, request: ThemeRequest) {
         if(user is General){
             val birthDay = user.birthDay!!
             if(birthDay.isBefore(LocalDate.now())){
@@ -67,6 +68,16 @@ class CakeServiceImpl(
                     )
                 }
         )
+    }
+
+    override fun updateCakeTheme(user: User, id: Long, request: ThemeRequest) {
+        val cake = cakeRepository.findByIdOrNull(id)
+            ?: throw CakeNotFoundException(id.toString())
+        if(cake.user == user){
+            cake.editTheme(request.theme)
+        } else {
+            throw NoPermissionsException(user.role.toString())
+        }
     }
 
 }
