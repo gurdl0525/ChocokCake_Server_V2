@@ -1,5 +1,5 @@
 FROM openjdk:11-jdk as Builder
-ARG JAR_FILE=build/libs/*.jar
+ARG JAR_FILE=build/libs/chocokcake-0.0.1-SNAPSHOT.jar
 ADD ${JAR_FILE} /app.jar
 
 FROM openjdk:17-jdk
