@@ -40,14 +40,16 @@ class CakeServiceImpl(
             if(cakeList.size -1 >= 0 && (cakeList[cakeList.size -1].birthDay == user.birthDay)){
                 throw AlreadyExistCakeException(user.toString())
             }
-            cakeRepository.save(Cake(
-                id = null,
-                cakeTheme = request.theme,
-                birthDay = user.birthDay!!,
-                user = user,
-                createdAt = LocalDateTime.now(),
-                updatedAt = null
-            ))
+            user.addCake(
+                cakeRepository.save(Cake(
+                    id = null,
+                    cakeTheme = request.theme,
+                    birthDay = user.birthDay!!,
+                    user = user,
+                    createdAt = LocalDateTime.now(),
+                    updatedAt = null
+                ))
+            )
         }
     }
 
