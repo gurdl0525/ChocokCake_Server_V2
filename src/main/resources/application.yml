@@ -9,11 +9,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        show_sql: false
+        show_sql: true
+    defer-datasource-initialization: true
 
   datasource:
     url: ${DB_URL}
-    driver-class-name: ${DB_CLASS}
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
@@ -21,6 +22,10 @@ spring:
     port: ${REDIS_PORT}
     host: ${REDIS_HOST}
     password: ${REDIS_PASSWORD}
+
+  sql:
+    init:
+      mode: always
 
 server:
   port: ${SERVER_PORT}
