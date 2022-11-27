@@ -15,8 +15,7 @@ class FilterConfig(
 
     @Throws(Exception::class)
     override fun configure(httpSecurity: HttpSecurity) {
-        httpSecurity.addFilterBefore(
-            TokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter::class.java)
+        httpSecurity.addFilterBefore(TokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter::class.java)
         httpSecurity.addFilterBefore(exceptionHandlerFilter, TokenFilter::class.java)
     }
 }

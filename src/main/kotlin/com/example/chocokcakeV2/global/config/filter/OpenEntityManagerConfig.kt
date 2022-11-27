@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter
 
 @Configuration
-class OpenEntityManagerConfiguration {
+class OpenEntityManagerConfig {
 
     @Bean
     fun openEntityManagerInViewFilter(): FilterRegistrationBean<OpenEntityManagerInViewFilter> {
