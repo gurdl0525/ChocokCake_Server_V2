@@ -17,6 +17,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
+import javax.transaction.Transactional
 
 @Service
 class CakeServiceImpl(
@@ -72,12 +73,12 @@ class CakeServiceImpl(
         )
     }
 
+    @Transactional
     override fun updateCakeTheme(user: User, id: Long, request: ThemeRequest) {
         val cake = cakeRepository.findByIdOrNull(id)
             ?: throw CakeNotFoundException(id.toString())
         if(cake.user == user){
             cake.editTheme(request.theme)
-            cakeRepository.save(cake)
         } else {
             throw NoPermissionsException(user.role.toString())
         }
