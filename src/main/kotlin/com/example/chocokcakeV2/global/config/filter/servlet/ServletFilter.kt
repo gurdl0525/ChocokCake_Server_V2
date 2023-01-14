@@ -7,7 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest
 
 @Component
-class ServletFilter(): Filter {
+class ServletFilter: Filter {
     private companion object val logger: Logger = LoggerFactory.getLogger(ServletFilter::class.java)
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
