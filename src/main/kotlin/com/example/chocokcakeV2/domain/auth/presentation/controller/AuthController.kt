@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import javax.validation.constraints.NotBlank
 
 @RestController
 @RequestMapping("/auth")
@@ -18,9 +19,10 @@ class AuthController(
     private val authService: AuthService
 ) {
 
-    @PostMapping("/check/id/{accountId}")
+    @PostMapping("/check")
     fun checkDuplicateAccountId(
-        @PathVariable("accountId", required = true)
+        @Valid @NotBlank
+        @RequestParam(required = true)
         request: String
     ){
         authService.checkDuplicateAccountId(request)
