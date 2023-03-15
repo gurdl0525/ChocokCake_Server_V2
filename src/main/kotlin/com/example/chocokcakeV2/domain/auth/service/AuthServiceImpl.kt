@@ -14,6 +14,7 @@ import com.example.chocokcakeV2.domain.auth.repository.RefreshTokenRepository
 import com.example.chocokcakeV2.domain.auth.repository.UserRepository
 import com.example.chocokcakeV2.global.common.facade.BirthDayFacade
 import com.example.chocokcakeV2.global.config.security.jwt.TokenProvider
+import com.example.chocokcakeV2.global.error.exception.UnAuthorizedException
 import com.example.chocokcakeV2.global.error.exception.UserNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
@@ -82,7 +83,8 @@ class AuthServiceImpl(
     override fun reissue(request: ReissueTokenRequest): TokenResponse {
 
         val redis = refreshTokenRepository
-            .findByAccessTokenAndRefreshToken(request.accessToken, request.refreshToken).orElse(null)
+            .findByAccessTokenAndRefreshToken(request.accessToken, request.refreshToken)
+            ?: throw UnAuthorizedException("Not Exists Tokens")
 
         val accountId = tokenProvider.getSubject(redis.accessToken)
 
