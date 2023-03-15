@@ -23,14 +23,14 @@ class General(
     role: Role,
     createdAt: LocalDateTime
 ): User(
-    id = id,
-    name = name,
-    accountId = accountId,
-    password = password,
-    birthDay = birthDay,
-    role = role,
-    createdAt = createdAt,
-    updatedAt = null
+    id,
+    name,
+    accountId,
+    password,
+    birthDay,
+    role,
+    createdAt,
+    null
 ) {
     @OneToMany(mappedBy = "user", cascade = [CascadeType.REMOVE])
     var cakeList: MutableList<Cake> = ArrayList()
