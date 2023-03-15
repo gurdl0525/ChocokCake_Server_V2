@@ -42,7 +42,6 @@ class TokenProvider(
             .signWith(SignatureAlgorithm.HS256, property.secretKey)
             .setSubject(accountId)
             .setHeaderParam("header", property.header)
-            .claim("typ", property.accessTyp)
             .setIssuedAt(Date())
             .setExpiration(Date(Date().time + (property.accessExp * 1000)))
             .compact()
@@ -52,19 +51,22 @@ class TokenProvider(
         return Jwts.builder()
             .signWith(SignatureAlgorithm.HS256, property.secretKey)
             .setHeaderParam("header", property.header)
-            .claim("typ", property.refreshTyp)
             .setIssuedAt(Date())
             .setExpiration(Date(Date().time + (property.refreshExp * 1000)))
             .compact()
     }
 
     fun solveToken(request: HttpServletRequest): String? {
+
         val bearerToken = request.getHeader(property.header)
-            ?: null
-        if (bearerToken != null && Pattern.matches("Bearer [(a-zA-Z0-9-._~+/=*)]{30,600}", bearerToken)) {
-            return bearerToken.substring(7)
+            ?: return null
+
+        return if (Pattern.matches("Bearer [(a-zA-Z0-9-._~+/=*)]{30,600}", bearerToken)) {
+            bearerToken.substring(7)
         }
-        return null
+        else {
+            null
+        }
     }
 
     fun validatedToken(token: String): String{

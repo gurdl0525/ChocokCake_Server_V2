@@ -9,7 +9,5 @@ data class TokenProperty(
     val header: String,
     val secretKey: String,
     val accessExp: Long,
-    val accessTyp: String,
-    val refreshExp: Long,
-    val refreshTyp: String
+    val refreshExp: Long
 )

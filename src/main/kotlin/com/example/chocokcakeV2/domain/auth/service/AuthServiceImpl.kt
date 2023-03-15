@@ -18,6 +18,7 @@ import com.example.chocokcakeV2.global.error.exception.UnAuthorizedException
 import com.example.chocokcakeV2.global.error.exception.UserNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
@@ -80,16 +81,17 @@ class AuthServiceImpl(
         throw IncorrectPasswordException(request.password)
     }
 
+    @Transactional
     override fun reissue(request: ReissueTokenRequest): TokenResponse {
 
-        val redis = refreshTokenRepository
-            .findByAccessTokenAndRefreshToken(request.accessToken, request.refreshToken)
-            ?: throw UnAuthorizedException("Not Exists Tokens")
+        val accountId = (
+                refreshTokenRepository.findByAccessTokenAndRefreshToken(request.accessToken, request.refreshToken)
+                    ?: throw UnAuthorizedException("Not Found By Tokens")
+                ).id
 
-        val accountId = tokenProvider.getSubject(redis.accessToken)
+        refreshTokenRepository.deleteById(accountId)
 
-        if(redis != null && userRepository.existsByAccountId(accountId)){
-            refreshTokenRepository.delete(redis)
+        if(userRepository.existsByAccountId(accountId)){
             return tokenProvider.generateTokens(accountId)
         }
         else throw UserNotFoundException("User Not Found By Tokens : $request")
