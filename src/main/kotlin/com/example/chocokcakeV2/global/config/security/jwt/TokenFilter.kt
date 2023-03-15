@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse
 class TokenFilter(
     private val tokenProvider: TokenProvider,
 ): OncePerRequestFilter() {
+
     @Throws(Exception::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
