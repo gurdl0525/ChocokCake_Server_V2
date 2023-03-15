@@ -17,13 +17,13 @@ class Admin(
     password: String,
     createdAt: LocalDateTime
 ): User(
-    id = id,
-    name = name,
-    accountId = accountId,
-    password = password,
-    birthDay = null,
-    role = Role.ADMIN,
-    createdAt = createdAt,
-    updatedAt = null
+    id,
+    name,
+    accountId,
+    password,
+    null,
+    Role.ADMIN,
+    createdAt,
+    null
 ) {
 }
