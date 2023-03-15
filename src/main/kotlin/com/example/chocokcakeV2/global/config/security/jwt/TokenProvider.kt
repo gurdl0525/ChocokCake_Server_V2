@@ -28,8 +28,7 @@ class TokenProvider(
             RefreshToken(
                 accountId,
                 generateAccessToken(accountId),
-                generateRefreshToken(),
-                property.refreshExp
+                generateRefreshToken()
             )
         )
         return TokenResponse(
