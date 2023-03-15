@@ -1,30 +1,18 @@
 package com.example.chocokcakeV2.domain.auth.entity.token
 
 import org.springframework.data.redis.core.RedisHash
-import org.springframework.data.redis.core.TimeToLive
 import org.springframework.data.redis.core.index.Indexed
 import javax.persistence.Id
 
-@RedisHash
-class RefreshToken(
-    id: String,
-    accessToken: String,
-    refreshToken: String,
-    refreshExp: Long
-) {
+@RedisHash(timeToLive = 723900)
+data class RefreshToken(
+
     @Id
-    val id: String = id
+    val id: String,
 
     @Indexed
-    var accessToken: String = accessToken
-        protected set
+    val accessToken: String,
 
     @Indexed
-    var refreshToken: String = refreshToken
-        protected set
-
-    @TimeToLive
-    var ttl: Long = refreshExp
-        protected set
-
-}
+    val refreshToken: String
+)
